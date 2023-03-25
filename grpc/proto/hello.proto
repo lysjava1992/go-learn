@@ -1,0 +1,22 @@
+syntax = "proto3";
+package proto;
+option go_package='/grpc/service';
+
+service Hello{
+  // 简单应答模式
+  rpc SayHello(HelloRequest) returns(HelloResponse){}
+
+  //请求流模式
+  rpc SayHello2(stream HelloRequest) returns(HelloResponse){}
+
+  //返回流模式
+  rpc SayHello3(HelloRequest) returns(stream HelloResponse){}
+  //双向流模式
+  rpc SayHello4(stream HelloRequest) returns(stream HelloResponse){}
+}
+message HelloRequest {
+  string name = 1;
+}
+message HelloResponse {
+  string message = 1;
+}

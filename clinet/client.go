@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"flag"
-	pb "gin-web/proto/grpc/service"
+	"gin-web/grpc/proto/grpc/service"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"log"
@@ -28,12 +28,12 @@ func main() {
 	}
 	defer conn.Close()
 	// 实例化client
-	c := pb.NewHelloClient(conn)
+	c := service.NewHelloClient(conn)
 
 	// 调用rpc，等待同步响应
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: *name})
+	r, err := c.SayHello(ctx, &service.HelloRequest{Name: *name})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
